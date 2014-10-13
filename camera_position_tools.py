@@ -36,13 +36,23 @@ class SquareObject:
             Path.LINETO,
             Path.CLOSEPOLY]
 
+        label = [
+                self.label,
+                ". Center: ",
+                str(self.centerPosition),
+                ". Side length: ",
+                str(self.sideSize),
+                ". Rotation: ",
+                str(self.rotation)]
+        label = ''.join(label)
+
         path = Path(verts, codes)
         patch = patches.PathPatch(
                 path, 
                 lw=2,
                 fill=False,
                 color=self.color,
-                label=self.label)
+                label=label)
         return(patch)
 
     def calculate_object_position(self, sideSize, centerPosition, rotation):
@@ -86,11 +96,18 @@ class CircleObject:
         self.patch = self.make_patch()
 
     def make_patch(self):
+        label = [
+                self.label,
+                ". Center: ",
+                str(self.centerPosition),
+                ". Radius: ",
+                str(self.radius)]
+        label = ''.join(label)
         circle = patches.Circle(
                 self.centerPosition,
                 self.radius,
                 fill=False,
                 edgecolor=self.color,
-                label=self.label)
+                label=label)
         return(circle)
 

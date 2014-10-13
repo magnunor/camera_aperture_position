@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from camera_position_tools import SquareObject, CircleObject
 
 #Everything in relation to HR camera coordinate system
+#Positive x and y is in the top right quadrant, negative x and positive y is in the right quadrant
 
 #There are two different objects: CircleObject and SquareObject
 #CircleObject has the input: 
@@ -23,7 +24,8 @@ GifAperture2 = CircleObject((7.62,-43.80),148.35/2, "GIF 2.5mm aperture", color=
 GHAADFInnerRadius = CircleObject((25.67,-30.94),484.1/2, "Gatan HAADF inner", color="purple")
 GADFInnerRadius = CircleObject((13.52,-28.70),294.4/2, "Gatan ADF inner", color="cyan")
 HRcamera = SquareObject((0,0), 2024, "TopHR camera", color="black")
-GIFcamera = SquareObject((8.56,-43.8), 337.7, "GIF Imaging aperture", rotation=5.0, color="yellow")
+GIFcamera = SquareObject((8.56,-43.8), 337.7, "GIF Imaging aperture", rotation=45.0, color="yellow")
+JADFInnerRadius = CircleObject((28,-64),876./2, "Jeol ADF inner", color="darkorchid")
 
 object_list = (
         BeamStopper, 
@@ -32,19 +34,18 @@ object_list = (
         GifAperture2,
         GHAADFInnerRadius,
         GADFInnerRadius,
-        GIFcamera)
+        GIFcamera,
+        JADFInnerRadius)
     
 fig, ax = plt.subplots(figsize=(10,10))
 
 for an_object in object_list:
-    if an_object.__class__.__name__ == 'CircleObject':
-        ax.add_patch(an_object.patch)
-    if an_object.__class__.__name__ == 'SquareObject':
-        ax.add_patch(an_object.patch)
+    ax.add_patch(an_object.patch)
+#ax.set_position([0.0,0.0,0.5,0.8])
+#ax.legend(loc='center left', bbox_to_anchor=(0.0,0.0))
 ax.legend()
-
 ax.set_ylim(-1100,1100)
 ax.set_xlim(-1100,1100)
 ax.set_axis_off()
 fig.tight_layout()
-fig.savefig("camera_overview.png", dpi=300)
+fig.savefig("camera_overview.pdf")#, dpi=300)
