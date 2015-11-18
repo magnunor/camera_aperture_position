@@ -2,14 +2,16 @@ from matplotlib.path import Path
 import matplotlib.patches as patches
 from math import cos, sin, radians
 
-class SquareObject:
-    def __init__(self, centerPosition, sideSize, label, rotation=0.0, color='black'):
-        self.sideSize = sideSize
+class RectangleObject:
+    def __init__(self, centerPosition, sideSize1, sideSize2, label, rotation=0.0, color='black'):
+        self.sideSize1 = sideSize1
+        self.sideSize2 = sideSize2
         self.label = label
         self.rotation = rotation
         self.centerPosition = centerPosition
         self.color = color
-        self.calculate_object_position(sideSize, centerPosition, rotation)
+        self.calculate_object_position(
+                sideSize1, sideSize2, centerPosition, rotation)
         self.patch = self.make_patch()
 
     def get_object_dimensions(self):
@@ -41,7 +43,9 @@ class SquareObject:
                 ". Center: ",
                 str(self.centerPosition),
                 ". Side length: ",
-                str(self.sideSize),
+                str(self.sideSize1),
+                "x",
+                str(self.sideSize2),
                 ". Rotation: ",
                 str(self.rotation)]
         label = ''.join(label)
@@ -55,16 +59,16 @@ class SquareObject:
                 label=label)
         return(patch)
 
-    def calculate_object_position(self, sideSize, centerPosition, rotation):
+    def calculate_object_position(self, sideSize1, sideSize2, centerPosition, rotation):
         #This can probably be done in a much more elegant way...
-        temp_x0 = -sideSize/2. 
-        temp_y0 = -sideSize/2.
-        temp_x1 = -sideSize/2. 
-        temp_y1 = sideSize/2.
-        temp_x2 = sideSize/2. 
-        temp_y2 = sideSize/2.
-        temp_x3 = sideSize/2. 
-        temp_y3 = -sideSize/2.
+        temp_x0 = -sideSize1/2. 
+        temp_y0 = -sideSize2/2.
+        temp_x1 = -sideSize1/2. 
+        temp_y1 = sideSize2/2.
+        temp_x2 = sideSize1/2. 
+        temp_y2 = sideSize2/2.
+        temp_x3 = sideSize1/2. 
+        temp_y3 = -sideSize2/2.
 
         x0 = temp_x0*cos(radians(rotation))-temp_y0*sin(radians(rotation))
         y0 = temp_x0*sin(radians(rotation))+temp_y0*cos(radians(rotation))
